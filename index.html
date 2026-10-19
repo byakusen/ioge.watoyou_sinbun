@@ -303,6 +303,83 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
   .wdocs{grid-template-columns:1fr;grid-template-rows:minmax(420px,1.9fr) auto;height:auto}
   .wgrid{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr))}
 }
+
+/* ---- 追加：自分で観点を立てる・文字数・引用・印刷・保存 ---- */
+[hidden]{display:none!important}
+.saved{font-size:12.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:5px 12px;
+  opacity:0;transform:translateY(-4px);transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap}
+.saved.show{opacity:1;transform:none}
+.btn.danger{background:var(--ng);color:#fff;border-color:var(--ng)}
+.t2wrap{display:flex;flex-direction:column;gap:10px;height:100%;min-height:0}
+.t2wrap>.t2,.t2wrap>.own{flex:1;min-height:0;height:auto}
+.modebar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.seg{display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--glass-strong);border:1px solid var(--line);margin-left:auto}
+.segbtn{border:none;background:transparent;border-radius:999px;padding:7px 14px;font-weight:700;font-size:14px;color:var(--muted);transition:all .2s}
+.segbtn:hover{color:var(--ink)}
+.segbtn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);box-shadow:0 3px 10px rgba(40,90,70,.25)}
+.own{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:16px}
+.own-side{display:flex;flex-direction:column;gap:10px;min-height:0}
+.goal{padding:10px 14px;border-radius:14px;background:var(--accent-soft);border:1.5px solid var(--accent);font-size:15px;line-height:1.6;font-weight:700}
+.goal b{display:block;color:var(--accent);font-size:12.5px}
+.goal span.empty{color:var(--muted);font-weight:500}
+.hintbox{padding:10px 14px;border-radius:14px;background:var(--glass-strong);border:1.5px dashed var(--line);font-size:14px;line-height:1.7}
+.hintbox b{display:block;font-size:12.5px;color:var(--muted)}
+.own-main{display:flex;flex-direction:column;gap:10px;min-height:0}
+.owntbl-wrap{flex:1;min-height:0;overflow:auto}
+table.owntbl{width:100%;border-collapse:separate;border-spacing:6px;table-layout:fixed}
+table.owntbl th.kh{font-size:13px;color:var(--muted);width:28%}
+table.owntbl th.dh,table.owntbl td.d{width:40px}
+.owntbl .field{font-size:15.5px;padding:8px 10px}
+.owntbl .headin{font-weight:800;text-align:center;color:#fff;border:none}
+.owntbl .headin::placeholder{color:rgba(255,255,255,.75)}
+.owntbl .headin.wa{background:var(--wa)} .owntbl .headin.yo{background:var(--yo)}
+.owntbl td.k .field{background:var(--accent-soft);font-weight:700}
+.owntbl .field.cw{border-color:color-mix(in srgb,var(--wa) 45%,transparent)}
+.owntbl .field.cy{border-color:color-mix(in srgb,var(--yo) 45%,transparent)}
+.x{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:var(--glass-strong);font-size:16px;line-height:1;color:var(--muted);transition:all .2s}
+.x:hover{border-color:var(--ng);color:var(--ng)}
+.ownstat{font-size:13.5px;color:var(--muted);font-weight:700;font-variant-numeric:tabular-nums}
+#ownAdd:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.meterrow{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.meter{font-size:12.5px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;white-space:nowrap;transition:color .2s}
+.meter.over{color:var(--ng)}
+.row3{display:grid;grid-template-columns:1.5fr 1fr .55fr;gap:6px}
+select.field{padding:6px 8px;cursor:pointer}
+.qwarn{font-size:12.5px;font-weight:700;color:var(--ng);line-height:1.5;animation:fadeIn .3s ease}
+.layrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.p-art{position:relative}
+.p-art>*{flex-shrink:0}
+.p-art p.q{text-indent:0;font-weight:700;color:#1f4f7a}
+.ovf{position:absolute;left:6px;bottom:6px;writing-mode:horizontal-tb;background:#d24a3c;color:#fff;font-size:11.5px;font-weight:700;
+  padding:3px 9px;border-radius:999px;box-shadow:0 2px 6px rgba(0,0,0,.2);animation:fadeIn .3s ease}
+#printArea{display:none}
+@media (min-width:761px){
+  .segbtn{font-size:15px}
+  .meter{font-size:13px}
+}
+@media (max-width:760px){
+  .own{grid-template-columns:1fr}
+  .seg{margin-left:0}
+  .segbtn{font-size:13px;padding:6px 10px}
+  .row3{grid-template-columns:1fr 1fr}
+  .saved{display:none}
+}
+@media print{
+  @page{size:A4 landscape;margin:10mm}
+  html,body{height:auto!important;background:#fff!important}
+  body{display:block!important;padding:0!important;overflow:visible!important;background-image:none!important}
+  .app{display:none!important}
+  #printArea{display:block!important}
+  #printArea .paper{width:100%;height:186mm;box-shadow:none;border:2px solid #555;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printArea .p-ttl{width:28mm}
+  #printArea .p-ttl .nm{font-size:40px}
+  #printArea .p-ttl .meta{font-size:13px}
+  #printArea .p-art h3{font-size:24px}
+  #printArea .p-art p{font-size:16px}
+  #printArea .p-tbl table{font-size:15px}
+  #printArea .p-tbl .cap{font-size:14px}
+  #printArea .p-tbl .empty{display:none}
+}
 </style>
 
 </head>
@@ -314,6 +391,7 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
       <div><h1>「和と洋新聞」を作ろう</h1><small>目的に合わせて材料を整理する</small></div>
     </div>
     <div class="spacer"></div>
+    <span class="saved" id="saveNote" role="status" aria-live="polite"></span>
     <button class="btn ghost small" id="resetBtn" type="button">↺ 最初からやり直す</button>
   </header>
 
@@ -349,23 +427,56 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
 
     <!-- Tab 2 -->
     <section class="panel" id="p2" role="tabpanel" hidden>
-      <div class="t2">
-        <div class="col">
-          <div>
-            <h2 class="ptitle">材料を表に整理しよう</h2>
-            <p class="lead">カードをタップして、表の正しいマスをタップ。観点ごとに和と洋をくらべよう。</p>
+      <div class="t2wrap">
+        <div class="modebar">
+          <h2 class="ptitle" style="margin:0">材料を表に整理しよう</h2>
+          <div class="seg" role="group" aria-label="整理のしかた">
+            <button class="segbtn" id="modeGame" type="button">① れんしゅう：カードで整理</button>
+            <button class="segbtn" id="modeOwn" type="button">② 自分で観点を立てる</button>
           </div>
-          <div class="chips" id="gameChips"></div>
-          <div class="pool" id="pool"></div>
-          <div class="status"><span id="count">0 / 8</span><div class="bar"><i id="barFill"></i></div></div>
-          <div class="msg" id="msg"></div>
         </div>
-        <div class="col">
-          <div class="tablewrap"><table class="sort" id="sortTable"></table></div>
-          <div class="clear">
-            <button class="btn ghost small" id="shuffleBtn" type="button">カードを配り直す</button>
-            <div class="spacer"></div>
-            <button class="btn" id="toPaper" type="button" hidden>この表を新聞にのせる →</button>
+        <div class="t2" id="gameView">
+          <div class="col">
+            <p class="lead">カードをタップして、表の正しいマスをタップ。観点ごとに和と洋をくらべよう。</p>
+            <div class="chips" id="gameChips"></div>
+            <div class="pool" id="pool"></div>
+            <div class="status"><span id="count">0 / 8</span><div class="bar"><i id="barFill"></i></div></div>
+            <div class="msg" id="msg"></div>
+          </div>
+          <div class="col">
+            <div class="tablewrap"><table class="sort" id="sortTable"></table></div>
+            <div class="clear">
+              <button class="btn ghost small" id="shuffleBtn" type="button">カードを配り直す</button>
+              <div class="spacer"></div>
+              <button class="btn" id="toPaper" type="button" hidden>この表を新聞にのせる →</button>
+            </div>
+          </div>
+        </div>
+        <div class="own" id="ownView" hidden>
+          <div class="own-side">
+            <div class="goal"><b>あなたの目的（「1 テーマ」で書いたこと）</b><span id="ownGoal"></span></div>
+            <p class="lead">目的に合わせて、くらべる「観点」を自分で考えよう。観点を左に書き、和と洋それぞれの中身を書きます。</p>
+            <div class="hintbox" id="ownHint"></div>
+            <div class="msg" id="ownMsg"></div>
+          </div>
+          <div class="own-main">
+            <div class="owntbl-wrap">
+              <table class="owntbl">
+                <thead><tr>
+                  <th class="kh">観点</th>
+                  <th><input class="field headin wa" id="ownWa" aria-label="くらべるもの（和）"></th>
+                  <th><input class="field headin yo" id="ownYo" aria-label="くらべるもの（洋）"></th>
+                  <th class="dh"></th>
+                </tr></thead>
+                <tbody id="ownBody"></tbody>
+              </table>
+            </div>
+            <div class="clear">
+              <button class="btn ghost small" id="ownAdd" type="button">＋ 観点を足す</button>
+              <span class="ownstat" id="ownStat"></span>
+              <div class="spacer"></div>
+              <button class="btn" id="ownToPaper" type="button">この表を新聞にのせる →</button>
+            </div>
           </div>
         </div>
       </div>
@@ -378,27 +489,36 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
           <div style="display:flex;align-items:center;gap:8px">
             <h2 class="ptitle" style="margin:0">下書きとわり付け</h2>
             <div class="spacer"></div>
-            <button class="btn small" id="autoBtn" type="button">下書きの例を入れる</button>
+            <button class="btn ghost small" id="autoBtn" type="button">空らんに例を入れる</button>
           </div>
           <div class="row2">
             <div><label class="lab" for="pName">新聞名（題字）</label><input id="pName" class="field"></div>
             <div><label class="lab" for="pDate">発行日</label><input id="pDate" class="field"></div>
             <div><label class="lab" for="pBy">発行者</label><input id="pBy" class="field"></div>
           </div>
-          <div><label class="lab" for="h1">記事1 の見出し</label><input id="h1" class="field"></div>
-          <div><label class="lab" for="b1">記事1 の本文</label><textarea id="b1" class="field" rows="3"></textarea></div>
+          <div><label class="lab" for="h1">記事1 の見出し（短く、読みたくなる言葉で）</label><input id="h1" class="field"></div>
+          <div><div class="meterrow"><label class="lab" for="b1">記事1 の本文</label><span class="meter" id="m1"></span></div><textarea id="b1" class="field" rows="3"></textarea></div>
           <div><label class="lab" for="h2">記事2 の見出し</label><input id="h2" class="field"></div>
-          <div><label class="lab" for="b2">記事2 の本文</label><textarea id="b2" class="field" rows="3"></textarea></div>
-          <div class="layouts" id="layouts">
-            <span class="lab" style="margin:0">わり付け：</span>
+          <div><div class="meterrow"><label class="lab" for="b2">記事2 の本文</label><span class="meter" id="m2"></span></div><textarea id="b2" class="field" rows="3"></textarea></div>
+          <div class="row3">
+            <div><label class="lab" for="qText">引用する言葉</label><input id="qText" class="field"></div>
+            <div><label class="lab" for="qSrc">出典（だれ・何から）</label><input id="qSrc" class="field"></div>
+            <div><label class="lab" for="qTo">のせる記事</label><select id="qTo" class="field"><option value="1">記事1</option><option value="2">記事2</option></select></div>
           </div>
-          <div class="hint">見出しは短く、読み手が「読みたい！」と思う言葉にしよう。</div>
+          <div class="qwarn" id="qWarn" hidden>出典も書こう。だれの言葉か・何から引いたかを書くのが引用のルールです。</div>
+          <div class="layrow">
+            <div class="layouts" id="layouts">
+              <span class="lab" style="margin:0">わり付け：</span>
+            </div>
+            <div class="spacer"></div>
+            <button class="btn small" id="printBtn" type="button">印刷する</button>
+          </div>
         </div>
         <div class="paperwrap">
           <div class="paper L1" id="paper">
             <div class="p-ttl"><div class="nm" id="vName"></div><div class="meta" id="vMeta"></div></div>
-            <div class="p-art p-a1"><h3 id="vH1"></h3><p id="vB1"></p></div>
-            <div class="p-art p-a2"><h3 id="vH2"></h3><p id="vB2"></p></div>
+            <div class="p-art p-a1" id="vA1"><h3 id="vH1"></h3><p id="vB1"></p><p class="q" id="vQ1" hidden></p><span class="ovf" id="ovf1" hidden>はみ出しています</span></div>
+            <div class="p-art p-a2" id="vA2"><h3 id="vH2"></h3><p id="vB2"></p><p class="q" id="vQ2" hidden></p><span class="ovf" id="ovf2" hidden>はみ出しています</span></div>
             <div class="p-tbl" id="vTbl"></div>
           </div>
           <div class="hint">新聞は、右上から左下へ読んでいきます。</div>
@@ -452,6 +572,7 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
     </section>
   </main>
 </div>
+<div id="printArea" aria-hidden="true"></div>
 
 <script>
 (function(){
@@ -473,7 +594,12 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
     {id:'L2',name:'B',cells:'"g a x" "g b x"'},
     {id:'L3',name:'C',cells:'"b a x" "g g x"'}
   ];
+  const KEY = 'wayo_shinbun_save_v1';
+  const FIELDS = ['purpose','pName','pDate','pBy','h1','b1','h2','b2','qText','qSrc','qTo','free'];
+  const PAPER_FIELDS = ['pName','pDate','pBy','h1','b1','h2','b2','qText','qSrc','qTo'];
+  const OWN_MAX = 6;
   const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   let S;
 
   /* ---------- sound (Web Audio) ---------- */
@@ -493,21 +619,79 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
 
   /* ---------- state ---------- */
   function today(){ const d=new Date(); return (d.getMonth()+1)+'月'+d.getDate()+'日'; }
-  function init(){
-    S = {tab:1, theme:'shoku', placed:{}, sel:null, cards:[], cleared:false, layout:'L1', checks:[], free:''};
-    $('purpose').value='';
-    $('pName').value='和と洋新聞'; $('pDate').value=today(); $('pBy').value='4年1組 1はん';
-    ['h1','b1','h2','b2'].forEach(k=>$(k).value='');
-    $('free').value=''; $('resultBox').innerHTML='';
-    deal(); renderThemes(); renderChecks(); renderLayouts(); autoDraft(); go(1);
+  function blankRow(){ return {k:'',wa:'',yo:''}; }
+  function fresh(){
+    return {tab:1, theme:'shoku', games:{}, sel:null, layout:'L1', mode:'game', tblSrc:'',
+            own:{wa:'',yo:'',rows:[blankRow(),blankRow(),blankRow()]}, card:false};
+  }
+  function blankGame(key){
+    const t=THEMES[key], c=[];
+    t.rows.forEach((r,i)=>{ c.push({id:i+'-wa',text:r.wa}); c.push({id:i+'-yo',text:r.yo}); });
+    for(let i=c.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [c[i],c[j]]=[c[j],c[i]]; }
+    return {placed:{}, cards:c, cleared:false};
+  }
+  function G(){
+    const g=S.games[S.theme];
+    if(!g || !Array.isArray(g.cards) || !g.cards.length || typeof g.placed!=='object' || !g.placed) S.games[S.theme]=blankGame(S.theme);
+    return S.games[S.theme];
+  }
+
+  /* ---------- 自動保存 ---------- */
+  let saveTimer=null;
+  function save(){ clearTimeout(saveTimer); saveTimer=setTimeout(saveNow,250); }
+  function saveNow(){
+    try{
+      const f={}; FIELDS.forEach(k=>f[k]=$(k).value);
+      const ck=CHECKS.map((c,i)=>!!($('ck'+i) && $('ck'+i).checked));
+      localStorage.setItem(KEY, JSON.stringify({theme:S.theme, games:S.games, layout:S.layout, mode:S.mode,
+        tblSrc:S.tblSrc, own:S.own, card:S.card, tab:S.tab, f, ck}));
+    }catch(e){}
+  }
+  function load(){ try{ const raw=localStorage.getItem(KEY); return raw?JSON.parse(raw):null; }catch(e){ return null; } }
+  function clearSave(){ clearTimeout(saveTimer); try{ localStorage.removeItem(KEY); }catch(e){} }
+  let noteTimer=null;
+  function note(text){
+    const n=$('saveNote'); n.textContent=text; n.classList.add('show');
+    clearTimeout(noteTimer); noteTimer=setTimeout(()=>{ n.classList.remove('show'); },3500);
+  }
+
+  function init(useSaved){
+    S=fresh();
+    const d=useSaved?load():null;
+    FIELDS.forEach(k=>{ $(k).value=''; });
+    $('qTo').value='1'; $('pDate').value=today();
+    renderChecks();
+    if(d && typeof d==='object'){
+      if(THEMES[d.theme]) S.theme=d.theme;
+      if(d.games && typeof d.games==='object') S.games=d.games;
+      if(LAYOUTS.some(L=>L.id===d.layout)) S.layout=d.layout;
+      S.mode = d.mode==='own' ? 'own' : 'game';
+      S.tblSrc = (d.tblSrc==='own'||d.tblSrc==='game') ? d.tblSrc : '';
+      if(d.own && Array.isArray(d.own.rows)){
+        S.own={wa:String(d.own.wa||''), yo:String(d.own.yo||''),
+               rows:d.own.rows.slice(0,OWN_MAX).map(r=>({k:String(r.k||''),wa:String(r.wa||''),yo:String(r.yo||'')}))};
+        if(!S.own.rows.length) S.own.rows.push(blankRow());
+      }
+      if(d.f) FIELDS.forEach(k=>{ if(typeof d.f[k]==='string') $(k).value=d.f[k]; });
+      if(!$('qTo').value) $('qTo').value='1';
+      if(Array.isArray(d.ck)) d.ck.forEach((v,i)=>{ if($('ck'+i)) $('ck'+i).checked=!!v; });
+      S.card=!!d.card;
+    }
+    $('resultBox').innerHTML='';
+    if(S.card) makeCard(true);
+    setMsg('',''); setOwnMsg('','');
+    setPlaceholders(); renderThemes(); renderLayouts(); renderOwn();
+    go(d && d.tab>=1 && d.tab<=5 ? d.tab : 1);
+    if(d) note('前回の続きを開きました');
   }
 
   /* ---------- tabs ---------- */
   function go(n){
     S.tab=n;
     for(let i=1;i<=5;i++){ $('tab'+i).setAttribute('aria-selected', i===n); $('p'+i).hidden = i!==n; }
-    if(n===2) renderGame();
+    if(n===2) renderTab2();
     if(n===3) renderPaper();
+    save();
   }
   document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{ctx(); go(+b.dataset.tab);}));
 
@@ -522,26 +706,36 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
       box.appendChild(b);
     });
   }
-  function setTheme(key){ if(S.theme===key) return; S.theme=key; deal(); autoDraft(); }
-
-  /* ---------- tab2 game ---------- */
-  function deal(){
-    const t=THEMES[S.theme]; S.placed={}; S.sel=null; S.cleared=false;
-    const c=[]; t.rows.forEach((r,i)=>{ c.push({id:i+'-wa',text:r.wa}); c.push({id:i+'-yo',text:r.yo}); });
-    for(let i=c.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [c[i],c[j]]=[c[j],c[i]]; }
-    S.cards=c;
+  /* テーマを変えても、書いた下書き・自分の表・ゲームの進み具合は消さない */
+  function setTheme(key){
+    if(S.theme===key) return;
+    S.theme=key; S.sel=null; setMsg('','');
+    setPlaceholders(); save();
   }
+
+  /* ---------- tab2 ---------- */
+  function renderTab2(){
+    $('modeGame').setAttribute('aria-pressed', S.mode==='game');
+    $('modeOwn').setAttribute('aria-pressed', S.mode==='own');
+    $('gameView').hidden = S.mode!=='game';
+    $('ownView').hidden = S.mode!=='own';
+    if(S.mode==='game') renderGame(); else renderOwn();
+  }
+  $('modeGame').addEventListener('click',()=>{ S.mode='game'; renderTab2(); save(); });
+  $('modeOwn').addEventListener('click',()=>{ S.mode='own'; renderTab2(); save(); });
+
+  /* ゲーム（れんしゅう） */
   function renderGame(){
-    const t=THEMES[S.theme];
+    const t=THEMES[S.theme], g=G();
     const chips=$('gameChips'); chips.innerHTML='';
     Object.entries(THEMES).forEach(([key,th])=>{
       const b=document.createElement('button'); b.type='button'; b.className='chip'+(key===S.theme?' on':'');
       b.textContent=th.kanji+'：'+th.pair;
-      b.addEventListener('click',()=>{ setTheme(key); renderThemes(); setMsg('',''); renderGame(); });
+      b.addEventListener('click',()=>{ setTheme(key); renderThemes(); renderGame(); });
       chips.appendChild(b);
     });
     const pool=$('pool'); pool.innerHTML='';
-    S.cards.filter(c=>!S.placed[c.id]).forEach(c=>{
+    g.cards.filter(c=>!g.placed[c.id]).forEach(c=>{
       const b=document.createElement('button'); b.type='button'; b.className='mcard'+(S.sel===c.id?' sel':'');
       b.textContent=c.text; b.dataset.id=c.id; b.draggable=true;
       b.addEventListener('click',()=>{ ctx(); S.sel = S.sel===c.id?null:c.id; renderGame(); });
@@ -552,7 +746,7 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
     t.rows.forEach((r,i)=>{
       h+=`<tr><th>${r.k}</th>`;
       ['wa','yo'].forEach(s=>{
-        const id=i+'-'+s, f=S.placed[id];
+        const id=i+'-'+s, f=g.placed[id];
         h+=`<td class="cell ${s}${f?' filled':''}${!f&&S.sel?' ready':''}" data-id="${id}">${f?r[s]:''}</td>`;
       });
       h+='</tr>';
@@ -563,23 +757,26 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
       td.addEventListener('dragover',e=>e.preventDefault());
       td.addEventListener('drop',e=>{ e.preventDefault(); S.sel=e.dataTransfer.getData('text/plain')||S.sel; drop(td.dataset.id); });
     });
-    const n=Object.keys(S.placed).length, total=S.cards.length;
+    const n=Object.keys(g.placed).length, total=g.cards.length;
     $('count').textContent=n+' / '+total; $('barFill').style.width=(n/total*100)+'%';
-    $('toPaper').hidden=!S.cleared;
+    $('toPaper').hidden=!g.cleared;
+    if(g.cleared && !$('msg').textContent) setMsg('この表は完成しています。「② 自分で観点を立てる」にもちょうせんしよう。','ok');
     if(!S.sel && n===0 && !$('msg').textContent) setMsg('まずはカードを1まいえらんでね。','');
   }
   function setMsg(t,c){ const m=$('msg'); m.textContent=t; m.className='msg '+c; }
   function drop(cellId){
-    if(!S.sel || S.placed[cellId]) return;
+    const g=G();
+    if(!S.sel || g.placed[cellId]) return;
     const t=THEMES[S.theme];
     if(S.sel===cellId){
-      S.placed[cellId]=true; S.sel=null; pinpon();
+      g.placed[cellId]=true; S.sel=null; pinpon();
       const [ri,s]=cellId.split('-');
       setMsg(`ピンポン！「${t.rows[ri].k}」で見ると、${s==='wa'?t.wa:t.yo}は「${t.rows[ri][s]}」だね。`,'ok');
-      if(Object.keys(S.placed).length===S.cards.length){
-        S.cleared=true; setTimeout(party,200);
+      if(Object.keys(g.placed).length===g.cards.length){
+        g.cleared=true; setTimeout(party,200);
         setMsg('全部整理できた！ 観点ごとにくらべると、ちがいがよく分かるね。','ok');
       }
+      save();
     } else {
       bubu(); setMsg('ブブー！ 観点（たての見出し）と、和・洋をもう一度たしかめよう。','ng');
       const card=$('pool').querySelector(`[data-id="${S.sel}"]`);
@@ -588,19 +785,94 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
     }
     renderGame();
   }
-  $('shuffleBtn').addEventListener('click',()=>{ deal(); setMsg('',''); renderGame(); });
-  $('toPaper').addEventListener('click',()=>go(3));
+  $('shuffleBtn').addEventListener('click',()=>{ S.games[S.theme]=blankGame(S.theme); S.sel=null; setMsg('',''); renderGame(); save(); });
+  $('toPaper').addEventListener('click',()=>{ S.tblSrc='game'; save(); go(3); });
+
+  /* 自分で観点を立てる */
+  function setOwnMsg(t,c){ const m=$('ownMsg'); m.textContent=t; m.className='msg '+c; }
+  function ownFilled(){ return S.own.rows.filter(r=>r.k.trim()); }
+  function renderOwn(){
+    const t=THEMES[S.theme];
+    const goal=$('purpose').value.trim();
+    $('ownGoal').textContent = goal || 'まだ書いていません。「1 テーマ」で、だれに何を伝えたいかを書こう。';
+    $('ownGoal').classList.toggle('empty', !goal);
+    $('ownHint').innerHTML = `<b>観点のヒント</b>「${esc(t.pair)}」なら、${t.rows.map(r=>'「'+esc(r.k)+'」').join('')}などの観点が考えられます。目的に合う観点や、ほかの観点も考えてみよう。`;
+    $('ownWa').value=S.own.wa; $('ownWa').placeholder='例：'+t.wa;
+    $('ownYo').value=S.own.yo; $('ownYo').placeholder='例：'+t.yo;
+    const body=$('ownBody'); body.innerHTML='';
+    S.own.rows.forEach((r,i)=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td class="k"><input class="field" data-r="${i}" data-f="k" aria-label="観点${i+1}" placeholder="観点${i+1}"></td>`+
+        `<td><input class="field cw" data-r="${i}" data-f="wa" aria-label="観点${i+1}の和"></td>`+
+        `<td><input class="field cy" data-r="${i}" data-f="yo" aria-label="観点${i+1}の洋"></td>`+
+        `<td class="d"><button class="x" type="button" data-del="${i}" aria-label="観点${i+1}の行を消す">×</button></td>`;
+      tr.querySelector('[data-f="k"]').value=r.k;
+      tr.querySelector('[data-f="wa"]').value=r.wa;
+      tr.querySelector('[data-f="yo"]').value=r.yo;
+      body.appendChild(tr);
+    });
+    $('ownAdd').disabled = S.own.rows.length>=OWN_MAX;
+    ownStat();
+  }
+  function ownStat(){
+    const rows=ownFilled(), n=rows.length;
+    const cells=rows.reduce((a,r)=>a+(r.wa.trim()?1:0)+(r.yo.trim()?1:0),0);
+    $('ownStat').textContent = n ? `観点 ${n}こ ／ うまったマス ${cells} / ${n*2}` : '観点はまだありません';
+  }
+  $('ownBody').addEventListener('input',e=>{
+    const el=e.target, r=+el.dataset.r, f=el.dataset.f;
+    if(!S.own.rows[r] || !f) return;
+    S.own.rows[r][f]=el.value; ownStat(); save();
+  });
+  $('ownBody').addEventListener('click',e=>{
+    const b=e.target.closest('[data-del]'); if(!b) return;
+    S.own.rows.splice(+b.dataset.del,1);
+    if(!S.own.rows.length) S.own.rows.push(blankRow());
+    renderOwn(); save();
+  });
+  $('ownAdd').addEventListener('click',()=>{
+    if(S.own.rows.length>=OWN_MAX) return;
+    S.own.rows.push(blankRow()); renderOwn(); save();
+    const ins=$('ownBody').querySelectorAll('[data-f="k"]'); ins[ins.length-1].focus();
+  });
+  $('ownWa').addEventListener('input',()=>{ S.own.wa=$('ownWa').value; save(); });
+  $('ownYo').addEventListener('input',()=>{ S.own.yo=$('ownYo').value; save(); });
+  $('ownToPaper').addEventListener('click',()=>{
+    ctx();
+    const rows=ownFilled();
+    if(!rows.length){ bubu(); setOwnMsg('まず、観点を1つ以上書こう。','ng'); return; }
+    const miss=rows.filter(r=>!r.wa.trim()||!r.yo.trim()).map(r=>'「'+r.k.trim()+'」');
+    if(miss.length){ bubu(); setOwnMsg(miss.join('')+'の行に、うまっていないマスがあるよ。','ng'); return; }
+    pinpon(); setOwnMsg('表ができた！ 新聞にのせたよ。','ok');
+    S.tblSrc='own'; save(); go(3);
+  });
 
   /* ---------- tab3 paper ---------- */
-  function autoDraft(){
+  function examples(){
     const t=THEMES[S.theme], r=t.rows;
-    $('pName').value = t.kanji+'の和と洋新聞';
-    $('h1').value = `${t.wa}と${t.yo}、どこがちがう？`;
-    $('b1').value = `わたしたちは、${t.pair}を${r.map(x=>'「'+x.k+'」').join('')}という観点でくらべました。${r[0].k}を見ると、${t.wa}は${r[0].wa}、${t.yo}は${r[0].yo}でした。`;
-    $('h2').value = `${r[1].k}にもちがいが`;
-    $('b2').value = `${r[1].k}をくらべると、${t.wa}は${r[1].wa}、${t.yo}は${r[1].yo}です。みなさんの家では、どちらが多いですか。`;
-    if(S.tab===3) renderPaper();
+    const shoku=S.theme==='shoku';
+    return {
+      pName: t.kanji+'の和と洋新聞',
+      pBy: '4年1組 1はん',
+      h1: `${t.wa}と${t.yo}、どこがちがう？`,
+      b1: `わたしたちは、${t.pair}を${r.map(x=>'「'+x.k+'」').join('')}という観点でくらべました。${r[0].k}を見ると、${t.wa}は${r[0].wa}、${t.yo}は${r[0].yo}でした。`,
+      h2: `${r[1].k}にもちがいが`,
+      b2: `${r[1].k}をくらべると、${t.wa}は${r[1].wa}、${t.yo}は${r[1].yo}です。みなさんの家では、どちらが多いですか。`,
+      qText: shoku ? '味の好みがちがうのは、油分のちがいが主な理由です' : '本や人の言葉を、そのまま書く',
+      qSrc: shoku ? '栄養士の林先生の話' : '「〇〇のひみつ」という本'
+    };
   }
+  function setPlaceholders(){
+    const ex=examples();
+    Object.keys(ex).forEach(k=>{ $(k).placeholder='例：'+ex[k]; });
+  }
+  /* 空らんにだけ例を入れる（書いたものは上書きしない） */
+  $('autoBtn').addEventListener('click',()=>{
+    const ex=examples(); let n=0;
+    ['pName','pBy','h1','b1','h2','b2'].forEach(k=>{ if(!$(k).value.trim()){ $(k).value=ex[k]; n++; } });
+    renderPaper(); save();
+    note(n ? '空らんに例を入れました。自分の言葉に書き直そう' : '空らんはありません');
+  });
   function renderLayouts(){
     const box=$('layouts'); box.querySelectorAll('.lay').forEach(e=>e.remove());
     LAYOUTS.forEach(L=>{
@@ -610,30 +882,90 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
       mini.style.gridTemplateColumns='1fr 1fr 8px';
       mini.style.gridTemplateAreas=L.cells;
       b.setAttribute('aria-label','わり付け '+L.name);
-      b.addEventListener('click',()=>{ S.layout=L.id; renderLayouts(); renderPaper(); });
+      b.addEventListener('click',()=>{ S.layout=L.id; renderLayouts(); renderPaper(); save(); });
       box.appendChild(b);
     });
   }
-  const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function paperTable(){
+    const t=THEMES[S.theme], g=G();
+    const own=ownFilled(), ownOK=own.length>0;
+    let src=S.tblSrc;
+    if(src==='own' && !ownOK) src='';
+    if(src==='game' && !g.cleared) src='';
+    if(!src) src = ownOK ? 'own' : (g.cleared ? 'game' : '');
+    if(src==='game') return {wa:t.wa, yo:t.yo, rows:t.rows};
+    if(src==='own') return {wa:S.own.wa.trim()||t.wa, yo:S.own.yo.trim()||t.yo, rows:own};
+    return null;
+  }
   function renderPaper(){
-    const t=THEMES[S.theme];
     $('paper').className='paper '+S.layout;
     $('vName').textContent=$('pName').value||'新聞名';
     $('vMeta').innerHTML=esc($('pDate').value)+'<br>'+esc($('pBy').value);
     $('vH1').textContent=$('h1').value; $('vB1').textContent=$('b1').value;
     $('vH2').textContent=$('h2').value; $('vB2').textContent=$('b2').value;
+    const qt=$('qText').value.trim(), qs=$('qSrc').value.trim(), to=$('qTo').value;
+    const qh = qt ? `「${esc(qt)}」${qs?`（${esc(qs)}）`:''}` : '';
+    ['1','2'].forEach(n=>{ const q=$('vQ'+n); q.innerHTML = to===n ? qh : ''; q.hidden = !(to===n && qh); });
+    $('qWarn').hidden = !(qt && !qs);
+    const tb=paperTable();
     let h;
-    if(S.cleared){
-      h=`<div class="cap">［${t.pair}をくらべた表］</div><table><thead><tr><th></th><th>${t.wa}</th><th>${t.yo}</th></tr></thead><tbody>`;
-      t.rows.forEach(r=>{ h+=`<tr><th>${r.k}</th><td>${r.wa}</td><td>${r.yo}</td></tr>`; });
+    if(tb){
+      h=`<div class="cap">［${esc(tb.wa)}と${esc(tb.yo)}をくらべた表］</div><table><thead><tr><th></th><th>${esc(tb.wa)}</th><th>${esc(tb.yo)}</th></tr></thead><tbody>`;
+      tb.rows.forEach(r=>{ h+=`<tr><th>${esc(r.k)}</th><td>${esc(r.wa)}</td><td>${esc(r.yo)}</td></tr>`; });
       h+='</tbody></table>';
     } else {
       h=`<div class="empty">ここに表がのります。<br>「2 材料の整理」で<br>表を完成させよう！</div>`;
     }
     $('vTbl').innerHTML=h;
+    checkFit();
   }
-  ['pName','pDate','pBy','h1','b1','h2','b2'].forEach(k=>$(k).addEventListener('input',renderPaper));
-  $('autoBtn').addEventListener('click',()=>{ autoDraft(); renderPaper(); });
+  /* 文字数メーターと、はみ出しチェック */
+  /* 実際にその記事のわくに何字入るかを、見えないうちに試して測る */
+  function artOver(art){ return art.scrollWidth > art.clientWidth+1 || art.scrollHeight > art.clientHeight+1; }
+  function measureCap(n){
+    const art=$('vA'+n), p=$('vB'+n), keep=p.textContent;
+    let lo=0, hi=1500;
+    p.textContent='';
+    if(artOver(art)){ p.textContent=keep; return 0; }
+    while(lo<hi){
+      const mid=Math.ceil((lo+hi)/2);
+      p.textContent='あ'.repeat(mid);
+      if(artOver(art)) hi=mid-1; else lo=mid;
+    }
+    p.textContent=keep;
+    return lo;
+  }
+  function checkFit(){
+    ['1','2'].forEach(n=>{
+      const art=$('vA'+n), m=$('m'+n), ovf=$('ovf'+n);
+      const len=[...$('b'+n).value.replace(/\s/g,'')].length;
+      if($('p3').hidden || !art.clientWidth){ m.textContent=len+'字'; m.classList.remove('over'); return; }
+      ovf.hidden=true;
+      const over = artOver(art);
+      const cap=measureCap(n);
+      ovf.hidden=!over;
+      m.textContent=`${len}字 ／ 目安 ${cap}字まで`;
+      m.classList.toggle('over', over || len>cap);
+    });
+  }
+  PAPER_FIELDS.forEach(k=>$(k).addEventListener(k==='qTo'?'change':'input',()=>{ renderPaper(); save(); }));
+  $('purpose').addEventListener('input',()=>{ save(); });
+  $('free').addEventListener('input',()=>{ save(); });
+  let rz=null;
+  window.addEventListener('resize',()=>{ clearTimeout(rz); rz=setTimeout(()=>{ if(!$('p3').hidden) checkFit(); },150); });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ if(S && !$('p3').hidden) checkFit(); });
+
+  /* 印刷（新聞だけを印刷。PDFで保存もできる） */
+  $('printBtn').addEventListener('click',()=>{
+    renderPaper();
+    const pa=$('printArea'); pa.innerHTML='';
+    const c=$('paper').cloneNode(true);
+    c.removeAttribute('id');
+    c.querySelectorAll('.ovf').forEach(e=>e.remove());
+    c.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));
+    pa.appendChild(c);
+    try{ window.print(); }catch(e){ note('このブラウザでは印刷できませんでした'); }
+  });
 
   /* ---------- tab4 reflect ---------- */
   function renderChecks(){
@@ -644,11 +976,16 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
       box.appendChild(l);
     });
   }
-  $('doneBtn').addEventListener('click',()=>{
+  $('checks').addEventListener('change',()=>save());
+  function makeCard(silent){
     const got=CHECKS.filter((c,i)=>$('ck'+i).checked);
     const free=$('free').value.trim();
     const t=THEMES[S.theme];
-    if(got.length===0 && !free){ bubu(); $('resultBox').innerHTML='<div class="result"><h3>まだ書けていないよ</h3>くふうしたことにチェックを入れるか、自分の言葉で書いてみよう。</div>'; return; }
+    if(got.length===0 && !free){
+      S.card=false;
+      if(!silent){ bubu(); $('resultBox').innerHTML='<div class="result"><h3>まだ書けていないよ</h3>くふうしたことにチェックを入れるか、自分の言葉で書いてみよう。</div>'; }
+      return;
+    }
     const star='★'.repeat(Math.min(5,got.length+(free?1:0)))+'☆'.repeat(Math.max(0,5-got.length-(free?1:0)));
     $('resultBox').innerHTML=`<div class="result"><h3>ふり返りカード</h3>
       <div class="stars" aria-label="くふうの数">${star}</div>
@@ -656,11 +993,26 @@ td.cell.filled.yo{background:var(--yo-soft);border-color:var(--yo)}
       <div><b>目的：</b>${esc($('purpose').value.trim()||'（未記入）')}</div>
       <div><b>くふう：</b>${got.length?got.map(esc).join('／'):'—'}</div>
       ${free?`<div><b>自分の言葉：</b>${esc(free)}</div>`:''}</div>`;
-    pinpon(); party();
+    S.card=true;
+    if(!silent){ pinpon(); party(); }
+  }
+  $('doneBtn').addEventListener('click',()=>{ makeCard(false); save(); });
+
+  /* ---------- やり直し（2回おしたときだけ全部消す） ---------- */
+  const RESET_LABEL='↺ 最初からやり直す';
+  let resetArm=null;
+  function disarm(){ clearTimeout(resetArm); resetArm=null; $('resetBtn').classList.remove('danger'); $('resetBtn').textContent=RESET_LABEL; }
+  $('resetBtn').addEventListener('click',()=>{
+    if(!resetArm){
+      $('resetBtn').classList.add('danger');
+      $('resetBtn').textContent='本当に全部消す？ もう一度おす';
+      resetArm=setTimeout(disarm,4000);
+      return;
+    }
+    disarm(); clearSave(); init(false); note('最初からやり直しました');
   });
 
-  $('resetBtn').addEventListener('click',()=>{ setMsg('',''); init(); });
-  init();
+  init(true);
 })();
 </script>
 <script>
